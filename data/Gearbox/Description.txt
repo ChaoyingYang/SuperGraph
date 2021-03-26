@@ -1,0 +1,2 @@
+LW-00, LW-01, LW-02, LW-03 correspond to crack 0mm, 5mm, 10mm, 15mm respectively.
+Each folder contains samples collected under six different loads, each txt file contains 9 columns of data, and the fifth column of data is used.

@@ -1,0 +1,2 @@
+
+Each file corresponds to the data under one working condition, and contains 300 samples, a total of 3 types of fault data, 100 samples for each type. 
