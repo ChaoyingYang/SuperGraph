@@ -41,5 +41,6 @@ howpublished = {\url{https://github.com/ChaoyingYang/SuperGraph}},
 
 ## Contact
 Chaoying Yang - yangcy@hust.edu.cn 
+ 
 Jie Liu - jie_liu@hust.edu.cn
 
