@@ -1,5 +1,5 @@
 ## SuperGraph
-Code release for SuperGraph: Spatial-temporal graph-based feature extraction for rotating machinery diagnosis.
+Code release for paper entitled "SuperGraph: Spatial-temporal graph-based feature extraction for rotating machinery diagnosis", and this paper is revised in IEEE Transactions on Industrial Electronics.
 
 ## Guide
 This project only provides the data and related codes used in the paper that allows anyone to reproduce all results presented in the paper. All algorithms were written by python 3.8, PyTorch 1.7.0, and PyTorch geometric  through running on a computer with an Intel Core 298 i7-8700K CPU and a 32G RAM.
@@ -14,8 +14,8 @@ This project only provides the data and related codes used in the paper that all
 
 
 ## Datasets
-- **[CWRU Bearing Dataset](https://csegroups.case.edu/bearingdatacenter/pages/download-data-file/)**
-- **[PU Bearing Dataset](https://mb.uni-paderborn.de/kat/forschung/datacenter/bearing-datacenter/)**
+- **[CWRU Bearing Dataset from Case Western Reserve University](https://csegroups.case.edu/bearingdatacenter/pages/download-data-file/)**
+- **[PU Bearing Dataset (KAT dataset)](https://mb.uni-paderborn.de/kat/forschung/datacenter/bearing-datacenter/)**
 - Gearbox dataset
 
 
@@ -40,6 +40,6 @@ howpublished = {\url{https://github.com/ChaoyingYang/SuperGraph}},
 ```
 
 ## Contact
-- yangcy@hust.edu.cn
-- jie_liu@hust.edu.cn
+Chaoying Yang - yangcy@hust.edu.cn
+Jie Liu - jie_liu@hust.edu.cn
 
