@@ -18,12 +18,12 @@ from matplotlib import cm
 
 
 
-def read_mat(path,key):  #读取.mat文件
+def read_mat(path,key):  #read .mat file
     data= sio.loadmat(path) 
     return(data[key])
 
 
-def splitlist(list1):    #将嵌套的列表变成一个列表
+def splitlist(list1):    #Turn a nested list into a list
     alist=[]
     a=0
     for sublist in list1:
@@ -41,14 +41,14 @@ def splitlist(list1):    #将嵌套的列表变成一个列表
     if a==0:
         return alist
 
-def arr_size(arr,size):  #将数组分割为指定大小数组块
+def arr_size(arr,size):  #Divide the array into array blocks of the specified size
     s=[]
     for i in range(0,int(len(arr))+1,size):
         c=arr[i:i+size]
         s.append(c)
     return s
 
-#数据准备
+#Read data
 #---------------------------0 load--------------------------------
 path='CWRU/12k Drive End Bearing Fault Data/105.mat'
 key='X105_DE_time'
@@ -415,7 +415,7 @@ dataa = [data01,data02,data03,data04,data05,data06,data07,data08,data09,data010,
         data31,data32,data33,data34,data35,data36,data37,data38,data39,data310,data311]
 
 
-
+#Construct a spatial-temporal graph, and calculate its graph Laplacian eigenvalue as a node representation
 def cala(data1):  
     def calpkm(data):
         data = np.array(data)
@@ -468,26 +468,26 @@ for k in range(len(A)):
     for i in range(len(A[0])):
         m +=1
         for j in range(len(A[0][0])):
-            a[m][j] = A[k][i][j]  
+            a[m][j] = A[k][i][j]   #graph Laplacian eigenvalue 
 
 
-
-x = a
-x=torch.tensor(x)
+x = a  
+x=torch.tensor(x) #Construct the input of the model 
 x = x.float()           
 
 
 
 
-#edge_index
-#边的连接关系
+#edge_index 
+
 edge_index=[[],[]]
 for i in range(0,len(a),10):
     for j in range(i,i+10):
         for k in range(i,i+10):
             if j!=k:
-                edge_index[0].append(j) 
-                edge_index[1].append(k)
+                edge_index[0].append(j)  #Construct edges in the SuperGraph 
+                edge_index[1].append(k)  # There is a starting node of an edge in edge_index[0], and the ending node of an edge is stored in edge_index[1], 
+                                         # the size of edge_index[0] represents the number of edges. 
 
 
 n = len(x) 
@@ -498,7 +498,7 @@ edge_index=edge_index.long()
  
 n1 = len(data01)
 n2 = int(n1*11)
-y=torch.rand(len(x))
+y=torch.rand(len(x))    # Construct the label of the nodes in SueprGraph
 for i in range(len(x)):
     for j in range(0,4):
         if j*n2<=i<n1+j*n2:
@@ -531,12 +531,12 @@ data = Data(edge_index=edge_index,x=x,y=y)
 print(data)
 
 
-data.test_mask=torch.rand(n)
+data.test_mask=torch.rand(n)  #Put the mask, that is, set the testing set, training set, and validation set
 data.train_mask=torch.rand(n)
 data.val_mask=torch.rand(n)
 
 
-arr = np.arange(n)
+arr = np.arange(n) # randomly set the testing set, training set, and validation set
 np.random.shuffle(arr) 
 
 
@@ -560,17 +560,17 @@ data.train_mask=data.train_mask.bool()
 data.val_mask=data.val_mask.bool() 
 
 
-
+#Build the GCN model
 class Net(torch.nn.Module): 
     def __init__(self):
-        super(Net, self).__init__()
+        super(Net, self).__init__()  
         self.conv1 = ChebConv(33, 30, K=3)
         self.conv2 = ChebConv(30, 25, K=3) 
         self.conv3 = ChebConv(25, 11, K=3)
 
         
     def forward(self): 
-        x, edge_index, edge_weight = data.x, data.edge_index, data.edge_attr
+        x, edge_index, edge_weight = data.x, data.edge_index, data.edge_attr # the Forward path of model
         x = F.relu(self.conv1(x, edge_index, edge_weight))  
         x = F.relu(self.conv2(x, edge_index, edge_weight))    
         x = self.conv3(x, edge_index, edge_weight)
@@ -580,7 +580,7 @@ class Net(torch.nn.Module):
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') 
 model, data = Net().to(device), data.to(device)
-optimizer = torch.optim.Adam([
+optimizer = torch.optim.Adam([               #optimizer
     dict(params=model.conv1.parameters(), weight_decay=6e-4),
     dict(params=model.conv2.parameters(), weight_decay=3e-4),
     dict(params=model.conv3.parameters(), weight_decay=1e-4),
@@ -588,9 +588,8 @@ optimizer = torch.optim.Adam([
 
 
 
-def train():
+def train():   # Backward propagation
     model.train()
-
     optimizer.zero_grad() 
     loss = F.nll_loss(model()[data.train_mask], data.y[data.train_mask])
     F.nll_loss(model()[data.train_mask], data.y[data.train_mask]).backward()
@@ -612,7 +611,7 @@ def test():
 
 
 best_val_acc = test_acc = 0
-for epoch in range(1, 301):
+for epoch in range(1, 301):   #output the results
     train()
     train_acc, val_acc, tmp_test_acc = test()
     if val_acc > best_val_acc:
