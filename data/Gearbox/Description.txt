@@ -1,6 +1,8 @@
 1. LW-00, LW-01, LW-02, LW-03 correspond to crack 0mm, 5mm, 10mm, 15mm respectively.
 
-2. The name of the Txt file is "input speed-load". For example, "100-0" means the data when the input speed is 100 rpm without load, and "100-2" means the data when the input speed is 100 rpm and the load is 2Nm. Each Txt file contains samples collected under six different loads, including 0 load, 2load, 4 load, 6load, 8 load, and 10 load.
+2. The name of the Txt file is "input speed-load". For example, "100-0" means the data when the input speed is 100 rpm without load, 
+and "100-2" means the data when the input speed is 100 rpm and the load is 2Nm. Each Txt file contains samples collected under six different loads,
+including 0 load, 2load, 4 load, 6load, 8 load, and 10 load.
 And each Txt file contains 9 columns of data, and the fifth column of data is used.
 
 3. The nine rows of data from left to right are sensor 1 (on the base of the experiment table, the lower left corner of the figure below), 
