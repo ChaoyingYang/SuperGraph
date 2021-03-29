@@ -15,12 +15,12 @@ from matplotlib import cm
 
 
 
-def read_mat(path,key):  #读取.mat文件
+def read_mat(path,key):
     data= sio.loadmat(path) 
     return(data[key])
 
 
-def splitlist(list1):    #将嵌套的列表变成一个列表
+def splitlist(list1):
     alist=[]
     a=0
     for sublist in list1:
@@ -38,13 +38,13 @@ def splitlist(list1):    #将嵌套的列表变成一个列表
     if a==0:
         return alist
 
-def arr_size(arr,size):  #将数组分割为指定大小数组块
+def arr_size(arr,size):  
     s=[]
     for i in range(0,int(len(arr))+1,size):
         c=arr[i:i+size]
         s.append(c)
     return s
-
+#read data
 #---------------------------0 load--------------------------------
 path='KAT/KATData0.mat'
 key='data'
@@ -105,7 +105,7 @@ image=dataa
 im=np.array(image)
 im.shape=120,50,50,1  
 image=im
-y=[]
+y=[]  #label
 for x in ys01:
     y.append(x)
 for x in ys02:
@@ -133,9 +133,9 @@ import matplotlib.pyplot as plt
 from skimage import util
 data=image
 from sklearn.model_selection import train_test_split
-X_train, X_test, Y_train, Y_test = train_test_split( data, label, test_size=0.6, random_state=42,stratify = label)
+X_train, X_test, Y_train, Y_test = train_test_split( data, label, test_size=0.6, random_state=42,stratify = label) #divide train,test,validation
 
-def build_CNN():
+def build_CNN(): #CNN model
     model=Sequential()
 
     model.add(Convolution2D(
