@@ -33,24 +33,14 @@ This repository is organized as:
 
 
 ## Citation
-Codes:
-```
-@misc{Yang2021,  
-author = {Chaoying Yang, Kaibo Zhou, and Jie Liu},  
-title = {SuperGraph: Spatial-temporal graph-based feature extraction for rotating machinery diagnosis},  
-year = {2021},  
-publisher = {GitHub},  
-journal = {GitHub repository},  
-howpublished = {\url{https://github.com/ChaoyingYang/SuperGraph}},  
-}  
-```
 Paper:
 ```
 @article{Yang2021,
   title={SuperGraph: Spatial-temporal graph-based feature extraction for rotating machinery diagnosis},
   author={Chaoying Yang, Kaibo Zhou, and Jie Liu},
   journal={},
-  year={2021}
+  year={2021},
+  url={https://github.com/ChaoyingYang/SuperGraph},
 }
 ```
 
