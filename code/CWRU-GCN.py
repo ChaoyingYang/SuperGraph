@@ -500,7 +500,7 @@ edge_index=edge_index.long()
  
 n1 = len(data01)
 n2 = int(n1*11)
-y=torch.rand(len(x))    # Construct the label of the nodes in SueprGraph
+y=torch.rand(len(x))    # Construct the label of the nodes in SuperGraph
 for i in range(len(x)):
     for j in range(0,4):
         if j*n2<=i<n1+j*n2:
