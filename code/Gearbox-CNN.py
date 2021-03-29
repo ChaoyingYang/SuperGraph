@@ -2,14 +2,12 @@ import numpy as np
 import scipy.io as sio
 import math
 import time
-from scipy.fftpack import fft, fftshift, ifft
-from scipy.fftpack import fftfreq
 import matplotlib.pyplot as plt
 import scipy.signal as signal
 import scipy
 from matplotlib import cm
 
-Start=time.time()
+
 dataset=[]
 k=4
 def loadDatadet(infile,k):
@@ -29,6 +27,8 @@ def normalization(x):
         y[i]=(y[i]-Min)/(Max-Min)
     return y.tolist()
     # return x
+
+#
 p=400
 p1=p*10
 #----------------------crack 0-------------------
@@ -333,7 +333,7 @@ for i in range(len(dataset)):
     y2=dataset[i]
     s.append(y2)
 
-y=[]
+y=[] #label
 
 for i in range(60):
     y.append(0)
@@ -370,11 +370,11 @@ import matplotlib.pyplot as plt
 from skimage import util
 data=image
 from sklearn.model_selection import train_test_split
-X_train, X_test, Y_train, Y_test = train_test_split( data, label, test_size=0.4, random_state=42,stratify = label)
+X_train, X_test, Y_train, Y_test = train_test_split( data, label, test_size=0.4, random_state=42,stratify = label) #divide train,test,validation
 
 
 
-def build_CNN():
+def build_CNN(): #CNN model
     model=Sequential()
 
     model.add(Convolution2D(
@@ -429,7 +429,7 @@ model=build_CNN()
 model.summary()
 acc=[]
 
-for i in range(10):
+for i in range(10):  #diagnosis
     history = model.fit(x_train, y_train, validation_split=0.5, epochs=epochs, batch_size=batch_size, verbose=1)
     loss,accuracy=model.evaluate(x_test,y_test) 
     acc.append([accuracy])
