@@ -48,7 +48,7 @@ def arr_size(arr,size):
         s.append(c)
     return s
 
-
+#read data
 #---------------------------0 load--------------------------------
 path='KAT/KATData0.mat'
 key='data'
@@ -93,7 +93,7 @@ y04=read_mat(path, key)
 y04=splitlist(y04)
 ys04=y04[0:10]+y04[100:110]+y04[200:210]
 
-y=[]
+y=[] #label
 for x in ys01:
     y.append(x)
 for x in ys02:
@@ -106,7 +106,7 @@ y=[x-1 for x in y]
 dataa=[datas01,datas02,datas03,datas04]
 
 
-def cala(data1):  
+def cala(data1):   #obatin spatial-temporal graph
     def calpkm(data):
         data = np.array(data)
         freqs, times, Sxx = signal.stft(data, fs=25000, window='hanning',
@@ -134,7 +134,7 @@ def cala(data1):
         I = np.identity(n)
         for i in range(n):
             D[i][i] = sum(W1[i])
-        L = D - W1
+        L = D - W1            #Laplacian matrix
         return L
     
     p01km = calpkm(data1)
@@ -142,7 +142,7 @@ def cala(data1):
     for k in range(len(p01km)):
         w01 = weight(p01km[k])
         L01 = calDifLaplacian(w01)
-        a01,b01 = np.linalg.eig(L01)
+        a01,b01 = np.linalg.eig(L01) #Orthogonal decomposition
         a01 = a01.tolist()
         A.append(a01)
     return A
@@ -165,11 +165,11 @@ for k in range(len(A)):
 
 
 x = a
-x=torch.tensor(x)
+x=torch.tensor(x) #feature matrix of SuperGraph
 x = x.float()
 
 
-edge_index=[[],[]]
+edge_index=[[],[]] #edge connection
 for i in range(0,len(a),10):
     for j in range(i,i+10):
         for k in range(i,i+10):
@@ -195,7 +195,7 @@ data.val_mask=torch.rand(n)
 
 
 arr = np.arange(n)
-np.random.shuffle(arr)
+np.random.shuffle(arr)      #divide trian,test,validation
 m = 0  
 for i in arr:
     m += 1
@@ -219,7 +219,7 @@ data.val_mask=data.val_mask.bool()
 
 
 
-class Net(torch.nn.Module): 
+class Net(torch.nn.Module):   #GCN model
     def __init__(self):
         super(Net, self).__init__()
         self.conv1 = ChebConv(33, 30, K=3)
@@ -245,19 +245,11 @@ optimizer = torch.optim.Adam([
     dict(params=model.conv3.parameters(), weight_decay=1e-4),
 ],lr=0.01)
 
-step = [70,140]
-base_lr = 1e-2
-def adjust_lr(epoch):
-    lr = base_lr * (0.1 ** np.sum(epoch >= np.array(step)))
-    for params_group in optimizer.param_groups:
-        params_group['lr'] = lr
-    
-    return lr
+
 
 
 def train():
     model.train()
-
     optimizer.zero_grad() 
     loss = F.nll_loss(model()[data.train_mask], data.y[data.train_mask])
     F.nll_loss(model()[data.train_mask], data.y[data.train_mask]).backward()
