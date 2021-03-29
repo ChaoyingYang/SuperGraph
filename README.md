@@ -18,6 +18,12 @@ This project only provides the data and related codes used in the paper that all
 - **[PU Bearing Dataset (KAT dataset)](https://mb.uni-paderborn.de/kat/forschung/datacenter/bearing-datacenter/)**
 - Gearbox dataset
 
+## Pakages
+
+This repository is organized as:
+- [Code](https://github.com/ChaoyingYang/SuperGraph/tree/master/code) contains the corresonding codes.
+- [data](https://github.com/ChaoyingYang/SuperGraph/tree/master/data) contains the used data from CWRU dataset， KAT dataset, and Gearbox dataset.
+
 
 ## Usage
 - Download the datasets  
@@ -37,6 +43,15 @@ publisher = {GitHub},
 journal = {GitHub repository},  
 howpublished = {\url{https://github.com/ChaoyingYang/SuperGraph}},  
 }  
+```
+Paper:
+```
+@article{Yang2021,
+  title={SuperGraph: Spatial-temporal graph-based feature extraction for rotating machinery diagnosis},
+  author={Chaoying Yang, Kaibo Zhou, and Jie Liu},
+  journal={},
+  year={2021}
+}
 ```
 
 ## Contact
