@@ -4,4 +4,5 @@
 data - the collected vibration sample
 label - the label of the corresponding sample
 
-3.Each file corresponds to the data under one working condition, and contains 300 samples, a total of 3 types of fault data, including health, inner ring fault, outer ring fault. 100 samples for each type. 
+3.Each file corresponds to the data under one working condition, and contains 300 samples, a total of 3 types of fault data,  
+including health, inner ring fault, outer ring fault. 100 samples for each type. 
