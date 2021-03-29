@@ -1,0 +1,30 @@
+Data was collected at 12,000 samples/second
+Data files are in Matlab format. Each file contains fan and drive end vibration data as well as motor rotational speed.  For all files, the following item in the variable name indicates:
+DE - drive end accelerometer data
+FE - fan end accelerometer data
+BA - base accelerometer data
+time - time series data
+RPM- rpm during testing
+
+Data were stored in the file "12k Drive End Bearing Fault Data" ,  among which * = Data not available, the details are as follows.
+
+The first column is the fault size, the second column is the load, and the third column is the speed (rpm). The fourth column is the file corresponding to the inner ring fault, the fifth column is the file corresponding to the ball fault, and the sixth to the eighth column correspond to the files of the outer ring fault signals collected in three different directions. 
+
+
+0.007"	0	1797	105.mat	118.mat	130.mat	144.mat	156.mat
+ 	1	1772	106.mat	119.mat	131.mat	145.mat	158.mat
+ 	2	1750	107.mat	120.mat	132.mat    146.mat	159.mat
+ 	3	1730	108.mat	121.mat	133.mat	147.mat	160.mat
+
+0.014"	0	1797	169.mat	185.mat	197.mat		
+ 	1	1772	170.mat	186.mat	198.mat	
+ 	2	1750	171.mat	187.mat	199.mat		
+ 	3	1730	172.mat	188.mat	200.mat		
+0.021"	0	1797	209.mat	222.mat	234.mat	246.mat	258.mat
+ 	1	1772	210.mat	223.mat	235.mat	247.mat	259.mat
+ 	2	1750	211.mat	224.mat	236.mat	248.mat	260.mat
+ 	3	1730	212.mat	225.mat	237.mat	249.mat	261.mat
+0.028"	0	1797	3001.mat	3005.mat			
+ 	1	1772	3002.mat	3006.mat			
+ 	2	1750	3003.mat	3007.mat			
+ 	3	1730	3004.mat	3008.mat			
