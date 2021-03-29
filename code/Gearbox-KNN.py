@@ -29,6 +29,7 @@ def normalization(x):
         y[i]=(y[i]-Min)/(Max-Min)
     return y.tolist()
 
+#read data
 Start=time.time()    
 sample_num=10
 G1=19
@@ -309,7 +310,7 @@ temp35=normalization(temp35)
 for j in range(0,400*sample_num,400):
     dataset.append(temp35[0+j:400+j])
     
-y=[]
+y=[] #label
 
 for i in range(60):
     y.append(0)
@@ -345,7 +346,7 @@ def diedai(a):
     return Train,Train_label,Test,Test_label
 
 
-def kNN(dataset, labels, testdata, k):
+def kNN(dataset, labels, testdata, k): #KNN network
     distSquareMat = []
     for i in range(len(dataset)):
         distSquareMat.append(np.sqrt(sum(np.square(dataset[i] - testdata)))) 
