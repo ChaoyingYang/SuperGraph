@@ -1,0 +1,14 @@
+1. The naming method of the py file is “dataset-method”, as shown in below. For example, “Gearbox-GCN.py” means that the experiments were conducted on the dataset Gearbox using GCN-based fault diagnosis method.
+
+2. Usage
+Download the datasets;
+Modify the file storage address in the code;
+Run the corresponding codes.
+
+3.Requirements
+Python 3.8
+Numpy 1.16.2
+sklearn 0.21.3
+Scipy 1.2.1
+Pytorch 1.7.0
+Pytroch Geometric
