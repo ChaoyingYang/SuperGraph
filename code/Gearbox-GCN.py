@@ -29,6 +29,7 @@ def loadDatadet(infile,k):
         dataset.append(temp2)
     return dataset
 
+#read data
 #----------------------crack 0-------------------
 mj=0
 temp00=[]
@@ -337,7 +338,7 @@ data1=[data00[0],data01[0],data02[0],data03[0],data04[0],data05[0],
 
                      
 
-def cala(data1):  
+def cala(data1):   #construct the spatial-temporal graph
     def calpkm(data):
         data = np.array(data)
         freqs, times, Sxx = signal.stft(data, fs=5000, window='hanning',
@@ -372,8 +373,8 @@ def cala(data1):
     A= []
     for k in range(len(p01km)):
         w01 = weight(p01km[k])
-        L01 = calDifLaplacian(w01)
-        a01,b01 = np.linalg.eig(L01)
+        L01 = calDifLaplacian(w01) 
+        a01,b01 = np.linalg.eig(L01)    #obtain eigenvalues
         a01 = a01.tolist()
         A.append(a01)
     return A
@@ -383,7 +384,7 @@ for x in data1:
     A.append(cala(x))  
 
 
-# 计算data.x
+# data.x
 a = np.zeros((len(A)*len(A[0]),len(A[0][0]))) 
 m = -1
 for k in range(len(A)):
@@ -393,14 +394,14 @@ for k in range(len(A)):
             a[m][j] = A[k][i][j]  
 
 x = a
-x=torch.tensor(x)
+x=torch.tensor(x)  # node attributes matrix
 x = x.float()           
       
 
 
 
 
-edge_index=[[],[]]
+edge_index=[[],[]] #edge connection
 for i in range(0,len(a),60):
     for j in range(i,i+60):
         for k in range(i,i+60):
@@ -417,7 +418,7 @@ edge_index=edge_index.long()
  
 
 
-y=torch.rand(len(x))
+y=torch.rand(len(x)) #label
 for i in range(len(x)):
         if 0<=i<60:
             y[i] = 0
@@ -443,7 +444,7 @@ data.val_mask=torch.rand(n)
 
 
 arr = np.arange(n)
-np.random.shuffle(arr) 
+np.random.shuffle(arr)   #divide train,test,validation
 
 
 m = 0  
