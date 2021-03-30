@@ -45,7 +45,7 @@ def arr_size(arr,size):
         s.append(c)
     return s
 
-#数据准备
+#read data
 #---------------------------0 load--------------------------------
 path='KAT/KATData0.mat'
 key='data'
@@ -135,7 +135,7 @@ def diedai(a):
     return Train,Train_label,Test,Test_label
 
 
-def kNN(dataset, labels, testdata, k):
+def kNN(dataset, labels, testdata, k):  #KNN algorithm
     distSquareMat = []
     for i in range(len(dataset)):
         distSquareMat.append(np.sqrt(sum(np.square(dataset[i] - testdata))))
