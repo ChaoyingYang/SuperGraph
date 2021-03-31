@@ -24,7 +24,6 @@ def read_mat(path,key):     #read .mat file
     data= sio.loadmat(path) 
     return(data[key])
 
-
 def splitlist(list1):       #Turn a nested list into a list
     alist=[]
     a=0
@@ -455,33 +454,27 @@ def cala(data1):
         w01 = weight(p01km[k])
         L01 = calDifLaplacian(w01)
         a01,b01 = np.linalg.eig(L01)
-        a01 = a01.tolist()
+        a01 = a01.tolist() #graph Laplacian eigenvalue 
         A.append(a01)
     return A
 
 A = []
 for x in dataa:
     A.append(cala(x))  
-
-
+    
 a = np.zeros((len(A)*len(A[0]),len(A[0][0]))) 
 m = -1
 for k in range(len(A)):
     for i in range(len(A[0])):
         m +=1
         for j in range(len(A[0][0])):
-            a[m][j] = A[k][i][j]    #graph Laplacian eigenvalue 
-
+            a[m][j] = A[k][i][j]    
 
 x = a  
 x=torch.tensor(x)   #Construct the input of the model 
 x = x.float()           
 
-
-
-
 #edge_index 
-
 edge_index=[[],[]]
 for i in range(0,len(a),10):
     for j in range(i,i+10):
@@ -490,14 +483,10 @@ for i in range(0,len(a),10):
                 edge_index[0].append(j)     #Construct edges in the SuperGraph 
                 edge_index[1].append(k)     # There is a starting node of an edge in edge_index[0], and the ending node of an edge is stored in edge_index[1], 
                                             # the size of edge_index[0] represents the number of edges. 
-
-
 n = len(x) 
 edge_index = torch.tensor(edge_index)
 edge_index=edge_index.long()
 
-
- 
 n1 = len(data01)
 n2 = int(n1*11)
 y=torch.rand(len(x))        # Construct the label of the nodes in SuperGraph
@@ -534,8 +523,6 @@ print(data)
 data.test_mask=torch.rand(n)    #Put the mask, that is, set the testing set, training set, and validation set
 data.train_mask=torch.rand(n)
 data.val_mask=torch.rand(n)
-
-
 arr = np.arange(n)      # randomly divide the testing set, training set, and validation set
 np.random.shuffle(arr) 
 
@@ -566,16 +553,13 @@ class Net(torch.nn.Module):
         self.conv1 = ChebConv(33, 30, K=3)
         self.conv2 = ChebConv(30, 25, K=3) 
         self.conv3 = ChebConv(25, 11, K=3)
-
-        
+     
     def forward(self): 
         x, edge_index, edge_weight = data.x, data.edge_index, data.edge_attr    # the Forward path of model
         x = F.relu(self.conv1(x, edge_index, edge_weight))  
         x = F.relu(self.conv2(x, edge_index, edge_weight))    
         x = self.conv3(x, edge_index, edge_weight)
         return F.log_softmax(x, dim=1)
-
-
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') 
 model, data = Net().to(device), data.to(device)
@@ -586,16 +570,12 @@ optimizer = torch.optim.Adam([                                                  
 ],lr=0.015)
 
 
-
 def train():                                                                     # Backward propagation
     model.train()
     optimizer.zero_grad() 
     loss = F.nll_loss(model()[data.train_mask], data.y[data.train_mask])
     F.nll_loss(model()[data.train_mask], data.y[data.train_mask]).backward()
     optimizer.step() 
-
-
-
 
 @torch.no_grad()
 def test():         # Test
@@ -607,8 +587,6 @@ def test():         # Test
         accs.append(acc)
     return accs  
 
-
-
 best_val_acc = test_acc = 0
 for epoch in range(1, 301):     #output the results
     train()
@@ -618,6 +596,3 @@ for epoch in range(1, 301):     #output the results
         test_acc = tmp_test_acc
     log = 'Epoch: {:03d}, Train: {:.4f}, Val: {:.4f}, Test: {:.4f}'
     print(log.format(epoch, train_acc, best_val_acc, test_acc))
-
-
-
