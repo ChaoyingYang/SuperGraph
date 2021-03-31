@@ -20,12 +20,12 @@ from matplotlib import cm
 
 
 
-def read_mat(path,key):  #read .mat file
+def read_mat(path,key):     #read .mat file
     data= sio.loadmat(path) 
     return(data[key])
 
 
-def splitlist(list1):    #Turn a nested list into a list
+def splitlist(list1):       #Turn a nested list into a list
     alist=[]
     a=0
     for sublist in list1:
@@ -43,7 +43,7 @@ def splitlist(list1):    #Turn a nested list into a list
     if a==0:
         return alist
 
-def arr_size(arr,size):  #Divide the array into array blocks of the specified size
+def arr_size(arr,size):     #Divide the array into array blocks of the specified size
     s=[]
     for i in range(0,int(len(arr))+1,size):
         c=arr[i:i+size]
@@ -427,11 +427,11 @@ def cala(data1):
         pkmn = np.zeros((len(Sxx),len(Sxx[0]),len(Sxx[0][0])))
         for k in range(len(Sxx)):
             for i in range(len(Sxx[0])):
-                for j in range(len(Sxx[0][0])):
-                    pkm[k][i][j] = abs(Sxx[k][i][j])**2/64
+                for j in range(len(Sxx[0][0])): 
+                    pkm[k][i][j] = abs(Sxx[k][i][j])**2/64  #obatain the Short-time periodogram
         return pkm
 
-    def weight(matrix):
+    def weight(matrix):  # Weight matrix construction
         W = np.zeros((len(matrix),len(matrix)))
         for i in range(len(matrix)):
             for j in range(i,len(matrix)):
@@ -440,7 +440,7 @@ def cala(data1):
                 W[j][i] = W[i][j]
         return W
                 
-    def calDifLaplacian(W1):
+    def calDifLaplacian(W1):     # Claculate the graph Laplacian matrix
         n = len(W1)
         D = np.zeros((n,n))
         I = np.identity(n)
@@ -470,11 +470,11 @@ for k in range(len(A)):
     for i in range(len(A[0])):
         m +=1
         for j in range(len(A[0][0])):
-            a[m][j] = A[k][i][j]   #graph Laplacian eigenvalue 
+            a[m][j] = A[k][i][j]    #graph Laplacian eigenvalue 
 
 
 x = a  
-x=torch.tensor(x) #Construct the input of the model 
+x=torch.tensor(x)   #Construct the input of the model 
 x = x.float()           
 
 
@@ -487,9 +487,9 @@ for i in range(0,len(a),10):
     for j in range(i,i+10):
         for k in range(i,i+10):
             if j!=k:
-                edge_index[0].append(j)  #Construct edges in the SuperGraph 
-                edge_index[1].append(k)  # There is a starting node of an edge in edge_index[0], and the ending node of an edge is stored in edge_index[1], 
-                                         # the size of edge_index[0] represents the number of edges. 
+                edge_index[0].append(j)     #Construct edges in the SuperGraph 
+                edge_index[1].append(k)     # There is a starting node of an edge in edge_index[0], and the ending node of an edge is stored in edge_index[1], 
+                                            # the size of edge_index[0] represents the number of edges. 
 
 
 n = len(x) 
@@ -500,7 +500,7 @@ edge_index=edge_index.long()
  
 n1 = len(data01)
 n2 = int(n1*11)
-y=torch.rand(len(x))    # Construct the label of the nodes in SuperGraph
+y=torch.rand(len(x))        # Construct the label of the nodes in SuperGraph
 for i in range(len(x)):
     for j in range(0,4):
         if j*n2<=i<n1+j*n2:
@@ -527,20 +527,17 @@ for i in range(len(x)):
             y[i] = 10
 y=y.long()
 
-
-
 data = Data(edge_index=edge_index,x=x,y=y)
 print(data)
 
 
-data.test_mask=torch.rand(n)  #Put the mask, that is, set the testing set, training set, and validation set
+data.test_mask=torch.rand(n)    #Put the mask, that is, set the testing set, training set, and validation set
 data.train_mask=torch.rand(n)
 data.val_mask=torch.rand(n)
 
 
-arr = np.arange(n) # randomly set the testing set, training set, and validation set
+arr = np.arange(n)      # randomly divide the testing set, training set, and validation set
 np.random.shuffle(arr) 
-
 
 m = 0  
 for i in arr:
@@ -572,7 +569,7 @@ class Net(torch.nn.Module):
 
         
     def forward(self): 
-        x, edge_index, edge_weight = data.x, data.edge_index, data.edge_attr # the Forward path of model
+        x, edge_index, edge_weight = data.x, data.edge_index, data.edge_attr    # the Forward path of model
         x = F.relu(self.conv1(x, edge_index, edge_weight))  
         x = F.relu(self.conv2(x, edge_index, edge_weight))    
         x = self.conv3(x, edge_index, edge_weight)
@@ -582,7 +579,7 @@ class Net(torch.nn.Module):
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') 
 model, data = Net().to(device), data.to(device)
-optimizer = torch.optim.Adam([               #optimizer
+optimizer = torch.optim.Adam([                                                   #optimizer
     dict(params=model.conv1.parameters(), weight_decay=6e-4),
     dict(params=model.conv2.parameters(), weight_decay=3e-4),
     dict(params=model.conv3.parameters(), weight_decay=1e-4),
@@ -590,7 +587,7 @@ optimizer = torch.optim.Adam([               #optimizer
 
 
 
-def train():   # Backward propagation
+def train():                                                                     # Backward propagation
     model.train()
     optimizer.zero_grad() 
     loss = F.nll_loss(model()[data.train_mask], data.y[data.train_mask])
@@ -601,7 +598,7 @@ def train():   # Backward propagation
 
 
 @torch.no_grad()
-def test():
+def test():         # Test
     model.eval()
     logits, accs = model(), []
     for _, mask in data('train_mask', 'val_mask', 'test_mask'):
@@ -613,7 +610,7 @@ def test():
 
 
 best_val_acc = test_acc = 0
-for epoch in range(1, 301):   #output the results
+for epoch in range(1, 301):     #output the results
     train()
     train_acc, val_acc, tmp_test_acc = test()
     if val_acc > best_val_acc:
