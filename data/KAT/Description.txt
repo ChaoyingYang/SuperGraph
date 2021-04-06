@@ -4,5 +4,7 @@
 data - the collected vibration sample
 label - the label of the corresponding sample
 
-3.Each file corresponds to the data under one working condition, and contains 300 samples, a total of 3 types of fault data,  
-including health, inner ring fault, outer ring fault. 100 samples for each type. 
+3. The “KATData0.mat” means that the vibration data were collected when the rotational speed is 1500 rpm, load torque is 0.7 Nm, and radial force is 1000 N. The “KATData1.mat” means that the vibration data were collected when the rotational speed is 900 rpm, load torque is 0.7 Nm, and radial force is 1000 N. The “KATData2.mat” means that the vibration data were collected when the rotational speed is 1500 rpm, load torque is 0.1 Nm, and radial force is 1000 N. The “KATData3.mat” means that the vibration data were collected when the rotational speed is 1500 rpm, load torque is 0.7 Nm, and radial force is 400 N.
+
+4. Each file corresponds to the data under one working condition, and contains 300 samples, a total of 3 types of fault data,  
+including health, inner ring fault, outer ring fault, corresponding to labels 0, 1, 2. 100 samples for each type. 
