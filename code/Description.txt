@@ -3,7 +3,7 @@
 2. Usage
 Download the datasets;
 Modify the file storage address in the code;
-Run the corresponding codes.
+Run the codes.
 
 3.Requirements
 Python 3.8
