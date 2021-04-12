@@ -1,5 +1,5 @@
 ## SuperGraph
-Codes are released for paper entitled "SuperGraph: Spatial-temporal graph-based feature extraction for rotating machinery diagnosis(20-TIE-4133.R2)", and this paper is revised in IEEE Transactions on Industrial Electronics.
+Codes are released for paper entitled "SuperGraph: Spatial-temporal graph-based feature extraction for rotating machinery diagnosis", and this paper is revised in IEEE Transactions on Industrial Electronics.
 
 ## Guide
 This project only provides the data and related codes used in the paper that allows anyone to reproduce all results presented in the paper. All algorithms were written by python 3.8, PyTorch 1.7.0, and PyTorch geometric  through running on a computer with an Intel Core 298 i7-8700K CPU and a 32G RAM.
@@ -39,7 +39,7 @@ Paper:
 @article{Yang2021,
   title={SuperGraph: Spatial-temporal graph-based feature extraction for rotating machinery diagnosis},
   author={Chaoying Yang, Kaibo Zhou, and Jie Liu},
-  journal={IEEE Transactions on Industrial Electronics (20-TIE-4133.R2)},
+  journal={IEEE Transactions on Industrial Electronics},
   year={2021},
   url={https://github.com/ChaoyingYang/SuperGraph},
 }
