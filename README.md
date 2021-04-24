@@ -41,6 +41,7 @@ Paper:
   author={Chaoying Yang, Kaibo Zhou, and Jie Liu},
   journal={IEEE Transactions on Industrial Electronics},
   year={2021},
+  doi={10.1109/TIE.2021.3075871},
   url={https://github.com/ChaoyingYang/SuperGraph},
 }
 ```
